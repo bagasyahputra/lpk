@@ -2,14 +2,18 @@ import { Icon } from "../../atoms/icon";
 
 interface DashboardHeaderProps {
   title: string;
+  onMenuClick?: () => void;
 }
 
-export function DashboardHeader({ title }: DashboardHeaderProps) {
+export function DashboardHeader({ title, onMenuClick }: DashboardHeaderProps) {
   return (
     <header className="h-20 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30 flex items-center justify-between px-8 sticky top-0 z-40">
       <div className="flex items-center gap-4">
         {/* Mobile menu toggle */}
-        <button className="lg:hidden p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors">
+        <button 
+          onClick={onMenuClick}
+          className="lg:hidden p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors"
+        >
           <Icon name="menu" />
         </button>
         <h1 className="text-2xl font-headline font-bold text-primary">

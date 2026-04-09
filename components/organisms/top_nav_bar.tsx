@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "../atoms/button";
 import { Icon } from "../atoms/icon";
 
@@ -7,32 +10,43 @@ interface TopNavBarProps {
 }
 
 export function TopNavBar({ showSearch = false }: TopNavBarProps) {
+  const pathname = usePathname();
+
+  const navLinks = [
+    { href: "/jobs", label: "Cari Pekerjaan" },
+    { href: "/training", label: "Pelatihan" },
+    { href: "/about-us", label: "Tentang Kami" },
+  ];
+
   return (
     <header className="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl bg-surface-container-low shadow-sm h-20 flex justify-center items-center">
       <div className="flex justify-between items-center px-8 w-full max-w-screen-2xl mx-auto">
         <div className="flex items-center gap-8">
-          <span className="text-2xl font-bold tracking-tighter text-blue-900 font-manrope">
+          <Link
+            href="/"
+            className="text-2xl font-bold tracking-tighter text-blue-900 font-manrope"
+          >
             InginKerja
-          </span>
+          </Link>
           <nav className="hidden md:flex items-center gap-6">
-            <Link
-              className="text-blue-900 border-b-2 border-blue-900 pb-1 font-manrope text-sm font-medium tracking-tight"
-              href="/jobs"
-            >
-              Cari Pekerjaan
-            </Link>
-            <Link
-              className="text-slate-600 hover:text-blue-700 font-manrope text-sm font-medium tracking-tight transition-all"
-              href="/training"
-            >
-              Pelatihan
-            </Link>
-            <Link
-              className="text-slate-600 hover:text-blue-700 font-manrope text-sm font-medium tracking-tight transition-all"
-              href="/about-us"
-            >
-              Tentang Kami
-            </Link>
+            {navLinks.map((link) => {
+              const isActive =
+                pathname === link.href || pathname.startsWith(link.href + "/");
+
+              return (
+                <Link
+                  key={link.href}
+                  className={
+                    isActive
+                      ? "text-blue-900 border-b-2 border-blue-900 pb-1 font-manrope text-sm font-medium tracking-tight"
+                      : "text-slate-600 hover:text-blue-700 font-manrope text-sm font-medium tracking-tight transition-all"
+                  }
+                  href={link.href}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
