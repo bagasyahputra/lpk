@@ -34,7 +34,7 @@ export function WalletCountrySwitcher({
       </div>
 
       {/* Country Pills / Selector */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {accounts.map((acc) => {
           const isSelected = acc.id === selectedAccountId;
           return (

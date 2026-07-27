@@ -105,21 +105,21 @@ export function CurrencyExchangeCard({ onExchangeSuccess }: CurrencyExchangeCard
         </span>
       </div>
 
-      <div className="space-y-4 relative">
+      <div className="space-y-4 relative min-w-0">
         {/* FROM Selector & Input */}
-        <div>
+        <div className="min-w-0">
           <label className="text-[11px] font-bold text-slate-400 uppercase mb-1 block px-1">
             From Currency
           </label>
-          <div className="flex items-center justify-between gap-4 bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 focus-within:border-purple-500 transition-all">
-            <div className="flex items-center gap-2.5">
+          <div className="flex items-center justify-between gap-2 sm:gap-4 bg-slate-50 dark:bg-slate-800/60 p-3.5 sm:p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 focus-within:border-purple-500 transition-all min-w-0 overflow-hidden">
+            <div className="flex items-center gap-2 min-w-0 shrink">
               <select
                 value={fromCurrency.code}
                 onChange={(e) => {
                   const sel = CURRENCIES.find((c) => c.code === e.target.value);
                   if (sel) setFromCurrency(sel);
                 }}
-                className="bg-transparent text-base font-bold text-slate-900 dark:text-white border-none outline-none cursor-pointer focus:ring-0"
+                className="bg-transparent text-sm sm:text-base font-bold text-slate-900 dark:text-white border-none outline-none cursor-pointer focus:ring-0 max-w-[120px] xs:max-w-[150px] sm:max-w-[180px] truncate min-w-0"
               >
                 {CURRENCIES.map((c) => (
                   <option key={c.code} value={c.code} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
@@ -129,7 +129,7 @@ export function CurrencyExchangeCard({ onExchangeSuccess }: CurrencyExchangeCard
               </select>
             </div>
             <input
-              className="w-36 text-right bg-transparent border-none outline-none focus:ring-0 font-headline text-2xl font-bold text-slate-900 dark:text-white"
+              className="w-24 xs:w-32 sm:w-36 text-right bg-transparent border-none outline-none focus:ring-0 font-headline text-lg sm:text-2xl font-bold text-slate-900 dark:text-white shrink-0 min-w-0"
               type="number"
               value={fromAmount}
               onChange={(e) => setFromAmount(Math.max(0, Number(e.target.value) || 0))}
@@ -142,26 +142,26 @@ export function CurrencyExchangeCard({ onExchangeSuccess }: CurrencyExchangeCard
           <button
             onClick={handleSwap}
             title="Tukar Mata Uang"
-            className="bg-[#1b0942] hover:bg-purple-900 text-white h-10 w-10 flex justify-center items-center rounded-full shadow-lg hover:rotate-180 transition-all duration-300 cursor-pointer"
+            className="bg-[#1b0942] hover:bg-purple-900 text-white h-10 w-10 flex justify-center items-center rounded-full shadow-lg hover:rotate-180 transition-all duration-300 cursor-pointer shrink-0"
           >
             <Icon name="expand_more" className="text-xl" />
           </button>
         </div>
 
         {/* TO Selector & Result */}
-        <div>
+        <div className="min-w-0">
           <label className="text-[11px] font-bold text-slate-400 uppercase mb-1 block px-1">
             To Currency
           </label>
-          <div className="flex items-center justify-between gap-4 bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60">
-            <div className="flex items-center gap-2.5">
+          <div className="flex items-center justify-between gap-2 sm:gap-4 bg-slate-50 dark:bg-slate-800/60 p-3.5 sm:p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 min-w-0 overflow-hidden">
+            <div className="flex items-center gap-2 min-w-0 shrink">
               <select
                 value={toCurrency.code}
                 onChange={(e) => {
                   const sel = CURRENCIES.find((c) => c.code === e.target.value);
                   if (sel) setToCurrency(sel);
                 }}
-                className="bg-transparent text-base font-bold text-slate-900 dark:text-white border-none outline-none cursor-pointer focus:ring-0"
+                className="bg-transparent text-sm sm:text-base font-bold text-slate-900 dark:text-white border-none outline-none cursor-pointer focus:ring-0 max-w-[120px] xs:max-w-[150px] sm:max-w-[180px] truncate min-w-0"
               >
                 {CURRENCIES.map((c) => (
                   <option key={c.code} value={c.code} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
@@ -170,7 +170,7 @@ export function CurrencyExchangeCard({ onExchangeSuccess }: CurrencyExchangeCard
                 ))}
               </select>
             </div>
-            <span className="font-headline text-2xl font-bold text-slate-400 dark:text-slate-500">
+            <span className="font-headline text-lg sm:text-2xl font-bold text-slate-400 dark:text-slate-500 text-right min-w-0 truncate">
               {isLoadingRate
                 ? '...'
                 : calculatedToAmount >= 1000
@@ -182,9 +182,9 @@ export function CurrencyExchangeCard({ onExchangeSuccess }: CurrencyExchangeCard
       </div>
 
       {/* Live Rate Display */}
-      <div className="flex justify-between items-center px-4 py-3.5 bg-purple-50 dark:bg-purple-950/40 rounded-2xl text-sm font-semibold">
+      <div className="flex flex-wrap sm:flex-nowrap justify-between items-center gap-2 px-4 py-3.5 bg-purple-50 dark:bg-purple-950/40 rounded-2xl text-xs sm:text-sm font-semibold min-w-0">
         <span className="text-slate-600 dark:text-slate-300">Live Rate</span>
-        <span className="text-purple-700 dark:text-purple-300 font-bold flex items-center gap-1">
+        <span className="text-purple-700 dark:text-purple-300 font-bold flex items-center gap-1 min-w-0 truncate">
           {isLoadingRate ? (
             <span className="text-xs italic">Updating...</span>
           ) : (
