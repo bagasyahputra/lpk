@@ -11,7 +11,7 @@ export function UserSidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex flex-col h-screen w-64 bg-white dark:bg-slate-950 border-r-0 rounded-r-3xl shadow-xl fixed left-0 top-0 z-40 py-8 px-4">
+    <aside className="hidden md:flex flex-col h-screen w-64 bg-white dark:bg-slate-950 border-r-0 rounded-br-none! rounded-r-3xl shadow-xl fixed left-0 top-0 z-40 py-8 px-4">
       <div className="mb-10 px-4">
         <div className="flex items-center gap-3">
           <img
