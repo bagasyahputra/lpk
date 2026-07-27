@@ -16,7 +16,7 @@ export function UserHeader({ userName, avatarSrc, progressPercentage, highlightC
   const isWalletActive = pathname?.startsWith('/user-dashboard/wallet');
 
   return (
-    <header className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+    <header className="flex flex-col md:flex-row justify-between items-end md:items-center mb-10 gap-6">
       <div>
         <h2 className="text-4xl lg:text-[44px] font-manrope font-extrabold tracking-tight text-primary mb-2 leading-tight">
           Selamat datang kembali, {userName}
