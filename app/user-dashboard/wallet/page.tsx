@@ -9,6 +9,7 @@ import { WalletProfileBreakdown } from '../../../components/organisms/user-dashb
 import { CurrencyExchangeCard } from '../../../components/organisms/user-dashboard/wallet/currency_exchange_card';
 import { EcosystemConnectivityCard } from '../../../components/organisms/user-dashboard/wallet/ecosystem_connectivity_card';
 import { WithdrawModal } from '../../../components/organisms/user-dashboard/wallet/withdraw_modal';
+import { OfflineWithdrawModal } from '../../../components/organisms/user-dashboard/wallet/offline_withdraw_modal';
 import { WalletRecentActivity } from '../../../components/organisms/user-dashboard/wallet/wallet_recent_activity';
 
 // Initial Worker Accounts Data across different placement countries
@@ -135,6 +136,7 @@ export default function UserWalletPage() {
   const [selectedAccountId, setSelectedAccountId] = useState<string>('jp');
   const [transactions, setTransactions] = useState<Transaction[]>(INITIAL_TRANSACTIONS);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState<boolean>(false);
+  const [isOfflineWithdrawModalOpen, setIsOfflineWithdrawModalOpen] = useState<boolean>(false);
 
   const activeAccount = accounts.find((a) => a.id === selectedAccountId) || accounts[0];
 
@@ -224,6 +226,45 @@ export default function UserWalletPage() {
     setTransactions((prev) => [newTx, ...prev]);
   };
 
+  // Handle Offline Withdrawal Submission
+  const handleOfflineWithdrawSubmit = (
+    account: CountryAccount,
+    amount: number,
+  ) => {
+    // 1. Deduct from available & total balance
+    setAccounts((prev) =>
+      prev.map((acc) => {
+        if (acc.id === account.id) {
+          const newAvail = Math.max(0, acc.availableBalance - amount);
+          return {
+            ...acc,
+            availableBalance: newAvail,
+            totalBalance: acc.lockedBalance + newAvail,
+            totalTransactions: acc.totalTransactions + 1,
+          };
+        }
+        return acc;
+      })
+    );
+
+    // 2. Add transaction history record
+    const newTx: Transaction = {
+      id: `tx-${Date.now()}`,
+      title: `Penarikan Offline - Kantor Vallas (${account.countryName})`,
+      date: 'Baru Saja',
+      category: 'Withdrawal',
+      currency: account.currencyCode,
+      amount: -amount,
+      formattedAmount: `- ${amount.toLocaleString('id-ID')} ${account.currencyCode}`,
+      status: 'Pending',
+      icon: 'storefront',
+      iconBg: 'bg-amber-50',
+      iconColor: 'text-amber-600',
+    };
+
+    setTransactions((prev) => [newTx, ...prev]);
+  };
+
   return (
     <div className="space-y-8">
       <UserHeader
@@ -241,7 +282,6 @@ export default function UserWalletPage() {
 
       <WalletHeroSection account={activeAccount} />
 
-      {/* Main Grid: Currency Exchange (Left) & Wallet Profile Breakdown + Ecosystem Connectivity (Right) */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <CurrencyExchangeCard
           activeAccount={activeAccount}
@@ -254,6 +294,7 @@ export default function UserWalletPage() {
           <WalletProfileBreakdown
             account={activeAccount}
             onOpenWithdrawModal={() => setIsWithdrawModalOpen(true)}
+            onOpenOfflineWithdrawModal={() => setIsOfflineWithdrawModalOpen(true)}
           />
           {/* <EcosystemConnectivityCard /> */}
         </div>
@@ -266,6 +307,14 @@ export default function UserWalletPage() {
         onClose={() => setIsWithdrawModalOpen(false)}
         account={activeAccount}
         onSubmitWithdraw={handleWithdrawSubmit}
+      />
+
+      <OfflineWithdrawModal
+        isOpen={isOfflineWithdrawModalOpen}
+        onClose={() => setIsOfflineWithdrawModalOpen(false)}
+        accounts={accounts}
+        activeAccount={activeAccount}
+        onSubmitOfflineWithdraw={handleOfflineWithdrawSubmit}
       />
     </div>
   );
