@@ -49,40 +49,40 @@ export function WalletHeroSection({ account }: WalletHeroSectionProps) {
 
       {/* Quick Stats Column */}
       <div className="grid grid-cols-1 gap-4">
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md transition-all">
-          <div className="p-3.5 bg-purple-100 dark:bg-purple-950/60 rounded-2xl text-purple-600 dark:text-purple-300">
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition-all">
+          <div className="w-10 h-10 justify-center items-center flex bg-purple-200 rounded-2xl text-purple-600">
             <Icon name="trending_up" className="text-2xl" />
           </div>
           <div>
-            <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">
+            <p className="text-slate-500 text-xs font-semibold">
               Total Transactions
             </p>
-            <p className="font-headline text-2xl font-bold text-slate-900 dark:text-white">
+            <p className="font-headline text-2xl font-bold text-slate-900">
               {account.totalTransactions}
             </p>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md transition-all">
-          <div className="p-3.5 bg-teal-100 dark:bg-teal-950/60 rounded-2xl text-teal-600 dark:text-teal-300">
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition-all">
+          <div className="w-10 h-10 justify-center items-center flex bg-teal-200 rounded-2xl text-teal-600">
             <Icon name="currency_exchange" className="text-2xl" />
           </div>
           <div>
-            <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">
+            <p className="text-slate-500 text-xs font-semibold">
               Exchange Volume
             </p>
-            <p className="font-headline text-2xl font-bold text-slate-900 dark:text-white">
+            <p className="font-headline text-2xl font-bold text-slate-900">
               {account.exchangeVolume}
             </p>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md transition-all">
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition-all">
           <div
-            className={`p-3.5 rounded-2xl ${
+            className={`w-10 h-10 justify-center items-center flex rounded-2xl ${
               account.employmentStatus === 'Aktif Bekerja'
-                ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300'
-                : 'bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300'
+                ? 'bg-emerald-100 text-emerald-600'
+                : 'bg-blue-100 text-blue-600'
             }`}
           >
             <Icon
@@ -91,10 +91,10 @@ export function WalletHeroSection({ account }: WalletHeroSectionProps) {
             />
           </div>
           <div>
-            <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">
+            <p className="text-slate-500 text-xs font-semibold">
               Status Karyawan
             </p>
-            <p className="font-headline text-xl font-bold text-slate-900 dark:text-white mt-0.5 flex items-center gap-2">
+            <p className="font-headline text-xl font-bold text-slate-900 mt-0.5 flex items-center gap-2">
               <span>{account.employmentStatus}</span>
               {account.employmentStatus === 'Aktif Bekerja' && (
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>

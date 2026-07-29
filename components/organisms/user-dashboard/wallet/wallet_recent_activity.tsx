@@ -22,28 +22,28 @@ export function WalletRecentActivity({ transactions }: WalletRecentActivityProps
   });
 
   return (
-    <section className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
-      <div className="p-6 md:p-8 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <section className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+      <div className="p-6 md:p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h4 className="font-headline text-xl font-bold text-slate-900 dark:text-white">
+          <h4 className="font-headline text-xl font-bold text-slate-900">
             Recent Activity
           </h4>
-          <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+          <p className="text-slate-500 text-sm font-medium">
             Monitor your global fund movement & withdrawal status
           </p>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
           {/* Category Filter Pills */}
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-2xl">
             {['All', 'Salary', 'Exchange', 'Withdrawal'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilterCategory(cat)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   filterCategory === cat
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
-                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-800'
+                    ? 'bg-white text-slate-900 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
                 {cat}
@@ -51,7 +51,7 @@ export function WalletRecentActivity({ transactions }: WalletRecentActivityProps
             ))}
           </div>
 
-          <button className="flex items-center gap-2 px-4 py-2 bg-indigo-950 dark:bg-indigo-900 text-white rounded-xl text-xs font-semibold hover:bg-indigo-900 transition-colors shadow-sm cursor-pointer">
+          <button className="flex items-center gap-2 px-4 py-2 bg-indigo-950 text-white rounded-xl text-xs font-semibold hover:bg-indigo-900 transition-colors shadow-sm cursor-pointer">
             <Icon name="download" className="text-base" />
             Export
           </button>
@@ -61,7 +61,7 @@ export function WalletRecentActivity({ transactions }: WalletRecentActivityProps
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50/70 dark:bg-slate-800/40 text-slate-400 text-[11px] font-extrabold uppercase tracking-widest">
+            <tr className="bg-slate-100 text-slate-400 text-[11px] font-extrabold uppercase tracking-widest">
               <th className="px-6 md:px-8 py-4">Transaction Details</th>
               <th className="px-6 md:px-8 py-4">Category</th>
               <th className="px-6 md:px-8 py-4">Currency</th>
@@ -80,26 +80,26 @@ export function WalletRecentActivity({ transactions }: WalletRecentActivityProps
               filteredTransactions.map((tx) => (
                 <tr
                   key={tx.id}
-                  className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+                  className="hover:bg-slate-50/50  transition-colors"
                 >
                   <td className="px-6 md:px-8 py-6">
                     <div className="flex items-center gap-3">
-                      <div className={`p-2.5 rounded-xl ${tx.iconBg} ${tx.iconColor}`}>
+                      <div className={`h-10 w-10 min-w-10 min-h-10 flex justify-center items-center rounded-xl ${tx.iconBg} ${tx.iconColor}`}>
                         <Icon name={tx.icon} />
                       </div>
                       <div>
-                        <p className="font-bold text-slate-900 dark:text-white">
+                        <p className="font-bold text-slate-900">
                           {tx.title}
                         </p>
                         <p className="text-xs text-slate-400">{tx.date}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 md:px-8 py-6 font-medium text-slate-600 dark:text-slate-300">
+                  <td className="px-6 md:px-8 py-6 font-medium text-slate-600">
                     {tx.category}
                   </td>
                   <td className="px-6 md:px-8 py-6">
-                    <span className="font-bold text-slate-900 dark:text-white">
+                    <span className="font-bold text-slate-900">
                       {tx.currency}
                     </span>
                   </td>
@@ -107,10 +107,10 @@ export function WalletRecentActivity({ transactions }: WalletRecentActivityProps
                     <span
                       className={`font-headline font-bold text-base ${
                         tx.amount > 0
-                          ? 'text-indigo-950 dark:text-indigo-300'
+                          ? 'text-indigo-950'
                           : tx.category === 'Withdrawal'
-                          ? 'text-rose-600 dark:text-rose-400'
-                          : 'text-slate-800 dark:text-slate-200'
+                          ? 'text-rose-600'
+                          : 'text-slate-800'
                       }`}
                     >
                       {tx.formattedAmount}
@@ -120,10 +120,10 @@ export function WalletRecentActivity({ transactions }: WalletRecentActivityProps
                     <span
                       className={`px-3.5 py-1.5 text-[10px] font-black rounded-full uppercase tracking-wider ${
                         tx.status === 'Completed'
-                          ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300'
+                          ? 'bg-emerald-100 text-emerald-700'
                           : tx.status === 'Pending'
-                          ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300'
-                          : 'bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300'
+                          ? 'bg-amber-100  text-amber-700'
+                          : 'bg-rose-100 text-rose-700'
                       }`}
                     >
                       {tx.status}

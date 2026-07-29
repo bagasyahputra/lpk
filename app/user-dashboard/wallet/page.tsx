@@ -174,21 +174,47 @@ export default function UserWalletPage() {
     setTransactions((prev) => [newTx, ...prev]);
   };
 
-  // Handle Exchange Success callback
+  // Handle Exchange Success callback (Balance transfer between wallets)
   const handleExchangeSuccess = (
-    fromCode: string,
-    toCode: string,
+    fromAccount: CountryAccount,
+    toAccount: CountryAccount,
     fromAmt: number,
     toAmt: number
   ) => {
+    // 1. Deduct from source wallet & Add to target wallet
+    setAccounts((prev) =>
+      prev.map((acc) => {
+        if (acc.id === fromAccount.id) {
+          const newAvail = Math.max(0, acc.availableBalance - fromAmt);
+          return {
+            ...acc,
+            availableBalance: newAvail,
+            totalBalance: acc.lockedBalance + newAvail,
+            totalTransactions: acc.totalTransactions + 1,
+          };
+        }
+        if (acc.id === toAccount.id) {
+          const newAvail = acc.availableBalance + toAmt;
+          return {
+            ...acc,
+            availableBalance: newAvail,
+            totalBalance: acc.lockedBalance + newAvail,
+            totalTransactions: acc.totalTransactions + 1,
+          };
+        }
+        return acc;
+      })
+    );
+
+    // 2. Add transaction history record
     const newTx: Transaction = {
       id: `tx-${Date.now()}`,
-      title: `Exchange ${fromCode} to ${toCode}`,
-      date: 'Just Now',
+      title: `Exchange ${fromAccount.currencyCode} ke ${toAccount.currencyCode}`,
+      date: 'Baru Saja',
       category: 'Exchange',
-      currency: `${fromCode} → ${toCode}`,
+      currency: `${fromAccount.currencyCode} → ${toAccount.currencyCode}`,
       amount: -fromAmt,
-      formattedAmount: `- ${fromAmt.toLocaleString('id-ID')}`,
+      formattedAmount: `- ${fromAmt.toLocaleString('id-ID')} ${fromAccount.currencyCode}`,
       status: 'Completed',
       icon: 'currency_exchange',
       iconBg: 'bg-purple-50 dark:bg-purple-950/60',
@@ -217,14 +243,19 @@ export default function UserWalletPage() {
 
       {/* Main Grid: Currency Exchange (Left) & Wallet Profile Breakdown + Ecosystem Connectivity (Right) */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <CurrencyExchangeCard onExchangeSuccess={handleExchangeSuccess} />
+        <CurrencyExchangeCard
+          activeAccount={activeAccount}
+          accounts={accounts}
+          onSelectAccount={(acc) => setSelectedAccountId(acc.id)}
+          onExchangeSuccess={handleExchangeSuccess}
+        />
 
         <div className="grid grid-cols-1 gap-6">
           <WalletProfileBreakdown
             account={activeAccount}
             onOpenWithdrawModal={() => setIsWithdrawModalOpen(true)}
           />
-          <EcosystemConnectivityCard />
+          {/* <EcosystemConnectivityCard /> */}
         </div>
       </section>
 
