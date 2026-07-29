@@ -14,7 +14,7 @@ export function WalletProfileBreakdown({
   onOpenWithdrawModal,
 }: WalletProfileBreakdownProps) {
   return (
-    <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between gap-6">
+    <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col gap-6">
       <div>
         <p className="text-slate-400 text-[11px] font-bold uppercase tracking-widest mb-1">
           Total Saldo ({account.countryName} {account.flagSymbol})
